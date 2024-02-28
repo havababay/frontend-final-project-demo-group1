@@ -1,4 +1,4 @@
-import { PeronsService } from './../services/perons.service';
+import { PersonsService } from '../services/persons.service';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgModelGroup } from '@angular/forms';
@@ -33,7 +33,7 @@ export class PersonFormComponent implements OnInit {
   @Input()
   id? : string;
 
-  constructor(private personService: PeronsService, private router: Router) {}
+  constructor(private personService: PersonsService, private router: Router) {}
 
   ngOnInit(): void {
     if (this.id) {

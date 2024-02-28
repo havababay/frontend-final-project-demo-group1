@@ -4,7 +4,7 @@ import { Person } from '../shared/model/person';
 @Injectable({
   providedIn: 'root'
 })
-export class PeronsService {
+export class PersonsService {
   private readonly NEXT_ID_KEY = "nextId";
   private readonly PERSON_KEY = "persons";
 

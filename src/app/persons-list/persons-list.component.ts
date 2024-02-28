@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { PeronsService } from '../services/perons.service';
+import { PersonsService } from '../services/persons.service';
 import { Person } from '../shared/model/person';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,7 +19,7 @@ import { DeletePersonDialogComponent } from '../delete-person-dialog/delete-pers
   styleUrl: './persons-list.component.css',
 })
 export class PersonsListComponent implements OnInit { 
-  constructor(private personService : PeronsService, private dialogService : MatDialog) {}
+  constructor(private personService : PersonsService, private dialogService : MatDialog) {}
   ngOnInit(): void {
     this.allPersons = this.personService.list();
   }
