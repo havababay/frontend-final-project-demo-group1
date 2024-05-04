@@ -1,0 +1,17 @@
+<div><button mat-raised-button color="primary" (click)="generateRandomTeam()">Choose Random Team</button>
+</div>
+<div *ngIf="randomPersons.length > 0">
+    <div class="person-container">
+        <div>
+            <app-person-card [currentPerson]="randomPersons[currentPersonIndex]"></app-person-card>
+        </div>
+        <div>
+            <button mat-icon-button (click)="nextPerson()">
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div>
+        <mat-progress-bar mode="determinate" [value]="getProgressValue()"></mat-progress-bar>
+    </div>
+</div>

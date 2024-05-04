@@ -15,41 +15,46 @@ import { PersonCardComponent } from '../person-card/person-card.component';
   selector: 'app-household-task-assignment',
   standalone: true,
   imports: [
-    CommonModule, MatSelectModule, MatFormFieldModule,FormsModule,
-    MatButtonModule, PersonCardComponent
+    CommonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    PersonCardComponent,
   ],
   templateUrl: './household-task-assignment.component.html',
   styleUrl: './household-task-assignment.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HouseholdTaskAssignmentComponent implements OnInit { 
-  allTasks : HouseholdTask[] = [];
-  allPersons : Person[] = [];
+export class HouseholdTaskAssignmentComponent implements OnInit {
+  allTasks: HouseholdTask[] = [];
+  allPersons: Person[] = [];
   randomTeam: Person[] = [];
 
   readonly PERSONS_PER_TASK = 2;
-  selectedTask? : HouseholdTask;
+  selectedTask?: HouseholdTask;
 
-  constructor(private householdTasksService : HouseholdTasksService,
-    private personService : PersonsService){
-  }
+  constructor(
+    private householdTasksService: HouseholdTasksService,
+    private personService: PersonsService
+  ) {}
   ngOnInit(): void {
     this.allTasks = this.householdTasksService.list();
     this.allPersons = this.personService.list();
   }
 
-  getDurationStyle() : string {
+  getDurationStyle(): string {
     if (!this.selectedTask) {
-      return ""
-    } 
+      return '';
+    }
 
     switch (this.selectedTask.duration) {
       case TaskDuration.SHORT:
-        return "task-short"
+        return 'task-short';
       case TaskDuration.MEDIUM:
-        return "task-medium"
+        return 'task-medium';
       default:
-        return "task-long"
+        return 'task-long';
     }
   }
 

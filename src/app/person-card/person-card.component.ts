@@ -6,14 +6,12 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-person-card',
   standalone: true,
-  imports: [
-    CommonModule, MatCardModule
-  ],
+  imports: [CommonModule, MatCardModule],
   templateUrl: './person-card.component.html',
   styleUrl: './person-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PersonCardComponent { 
+export class PersonCardComponent {
   @Input()
-  currentPerson? : Person;
+  currentPerson?: Person;
 }
