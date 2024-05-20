@@ -4,6 +4,7 @@ import { PersonFormComponent } from './person-form/person-form.component';
 import { TeamViewComponent } from './team-view/team-view.component';
 import { HouseholdTaskAssignmentComponent } from './household-task-assignment/household-task-assignment.component';
 import { RandomTeamProgressComponent } from './random-team-progress/random-team-progress.component';
+import { TimerContainerComponent } from './timer-container/timer-container.component';
 
 export const routes: Routes = [
     {path: '', component: PersonsListComponent},
@@ -11,5 +12,6 @@ export const routes: Routes = [
     {path: 'newperson', component : PersonFormComponent},
     {path: 'team', component : TeamViewComponent},
     {path: 'household-assignment', component: HouseholdTaskAssignmentComponent},
-    {path: 'progress', component: RandomTeamProgressComponent}
+    {path: 'progress', component: RandomTeamProgressComponent},
+    {path: 'timer', component: TimerContainerComponent}
 ];
