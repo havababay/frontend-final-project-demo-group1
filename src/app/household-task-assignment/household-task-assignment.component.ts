@@ -40,7 +40,10 @@ export class HouseholdTaskAssignmentComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.allTasks = this.householdTasksService.list();
-    this.allPersons = this.personService.list();
+    this.personService.list().then(
+      (result : Person[]) =>
+        this.allPersons = result
+    );
   }
 
   getDurationStyle(): string {

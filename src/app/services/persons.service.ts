@@ -1,76 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Person } from '../shared/model/person';
+import {
+  DocumentSnapshot,
+  Firestore,
+  QuerySnapshot,
+  addDoc,
+  collection,
+  getDocs,
+} from '@angular/fire/firestore';
+import { personConverter } from './converters/person-converter';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PersonsService {
-  private readonly NEXT_ID_KEY = "nextId";
-  private readonly PERSON_KEY = "persons";
+  constructor(private firestore: Firestore) {}
 
-  constructor() { }
+  async list(): Promise<Person[]> {
+    const peopleCollection = collection(this.firestore, 'people').withConverter(
+      personConverter
+    );
 
-  private getNextId() : number {
-    const nextIdString = localStorage.getItem(this.NEXT_ID_KEY);
+    const quertSnapshot : QuerySnapshot<Person | undefined> = await getDocs(
+      peopleCollection
+    );
 
-    return nextIdString ? parseInt(nextIdString) : 0;
+    const results: Person[] = [];
+
+    quertSnapshot.docs.forEach((doc: DocumentSnapshot<Person | undefined>) => {
+      const data = doc.data();
+      if (data) {
+        results.push(data);
+      }
+    });
+
+    return results;
   }
 
-  private setNextId(id : number) {
-    localStorage.setItem(this.NEXT_ID_KEY, id.toString());
+  get(id: string): Person | undefined {
+    return new Person('', '', '', '');
   }
 
-  private setPersons(allPersons : Map<number, Person>) {
-    localStorage.setItem(this.PERSON_KEY,
-      JSON.stringify(Array.from(allPersons.values())));
+  async add(newPersonData: Person) {
+    const peopleCollection = collection(this.firestore, 'people').withConverter(
+      personConverter
+    );
+    await addDoc(peopleCollection, newPersonData);
   }
 
-  private getPersons() : Map<number, Person> {
-    const personString = localStorage.getItem(this.PERSON_KEY);
-    const idToPerson = new Map<number, Person>();
+  update(existingPerson: Person): void {}
 
-    if (personString) {
-      JSON.parse(personString).forEach((person : Person) => {
-        Object.setPrototypeOf(person, Person.prototype)
-        idToPerson.set(person.id, person);
-      });
-    }
-
-    return idToPerson;
-  }
-
-  list() : Person[] {
-    return Array.from(this.getPersons().values());
-  }
-
-  get(id : number) : Person | undefined {
-    return this.getPersons().get(id);
-  }
-
-  add(newPersonData:Person) {
-    let nextId = this.getNextId();
-    newPersonData.id = nextId
-
-    const personsData = this.getPersons();
-    personsData.set(nextId, newPersonData);
-    this.setPersons(personsData);
-
-    this.setNextId(++nextId);
-  }
- 
-  update(existingPerson : Person) : void {
-    const personsData = this.getPersons();
-
-    if (personsData.has(existingPerson.id)) {
-      personsData.set(existingPerson.id, existingPerson);
-      this.setPersons(personsData);
-    }
-  }
-
-  delete(existingPersonId : number) : void {
-    const personsData = this.getPersons();
-
-    personsData.delete(existingPersonId);
-    this.setPersons(personsData);
-  }
+  delete(existingPersonId: string): void {}
 }

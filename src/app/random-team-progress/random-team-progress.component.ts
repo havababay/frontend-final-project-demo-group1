@@ -23,7 +23,10 @@ export class RandomTeamProgressComponent implements OnInit {
   constructor(private personsService: PersonsService) {}
 
   ngOnInit(): void {
-    this.allPersons = this.personsService.list();
+    this.personsService.list().then(
+      (result : Person[]) => this.allPersons = result 
+    );
+    
   }
 
   generateRandomTeam() {
